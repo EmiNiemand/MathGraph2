@@ -205,14 +205,13 @@ Matrix4x4 Matrix4x4::GetTransposeOfMatrix() const {
     return result;
 }
 
-//TODO implement vec3 or take it from previous task
-/*void Matrix4x4::SetTranslationPart(const Vector3& translation) {
+void Matrix4x4::SetTranslationPart(const Vector& translation) {
     matrixData[12] = translation.x;
     matrixData[12] = translation.y;
     matrixData[12] = translation.z;
 }
 
-void Matrix4x4::SetScale(const Vector3 &scale) {
+void Matrix4x4::SetScale(const Vector &scale) {
     LoadIdentity();
     matrixData[0] = scale.x;
     matrixData[5] = scale.y;
@@ -226,7 +225,7 @@ void Matrix4x4::SetUniformScale(const float scale) {
     matrixData[10] = scale;
 }
 
-void Matrix4x4::SetRotationAxis(const float angle, const Vector3 &axis) {
+void Matrix4x4::SetRotationAxis(const float angle, const Vector &axis) {
     Vector3 u = axis.getNormalized();
 
     float sinAngle = std::sin(M_PI * angle / 180);
@@ -246,7 +245,7 @@ void Matrix4x4::SetRotationAxis(const float angle, const Vector3 &axis) {
     matrixData[2] = u.x * u.z * oneMinusCosAngle - sinAngle * u.y;
     matrixData[6] = u.y * u.z *oneMinusCosAngle + sinAngle * u.x;
     matrixData[10] = u.z * u.z + cosAngle * (1 - (u.z * u.z));
-}*/
+}
 
 void Matrix4x4::SetRotationX(const float angle) {
     LoadIdentity();

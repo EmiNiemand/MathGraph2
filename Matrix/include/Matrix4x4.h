@@ -6,6 +6,8 @@
 #define MATHGRAPH2_MATRIX4X4_H
 
 
+#include "Vector.h"
+
 class Matrix4x4 {
 private:
     float matrixData[16] = {0.0f};
@@ -31,10 +33,10 @@ public:
     Matrix4x4 GetInverseOfMatrix() const;
     Matrix4x4 GetTransposeOfMatrix() const;
     //TODO Vec3
-    /*void SetTranslationPart(const Vector3& translation);
-    void SetScale(const Vector3& scale);
+    void SetTranslationPart(const Vector& translation);
+    void SetScale(const Vector& scale);
     void SetUniformScale(float scale);
-    void SetRotationAxis(float angle, Vector3& axis);*/
+    void SetRotationAxis(float angle, Vector& axis);
     void SetRotationX(float angle);
     void SetRotationY(float angle);
     void SetRotationZ(float angle);
