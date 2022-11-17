@@ -42,79 +42,48 @@ const float *Matrix4x4::getMatrixData() const {
     return matrixData;
 }
 
-Matrix4x4 Matrix4x4::operator+(const Matrix4x4& mat) const{
-    return {matrixData[0] + mat.getMatrixData()[0],
-            matrixData[1] + mat.getMatrixData()[1],
-            matrixData[2] + mat.getMatrixData()[2],
-            matrixData[3] + mat.getMatrixData()[3],
-            matrixData[4] + mat.getMatrixData()[4],
-            matrixData[5] + mat.getMatrixData()[5],
-            matrixData[6] + mat.getMatrixData()[6],
-            matrixData[7] + mat.getMatrixData()[7],
-            matrixData[8] + mat.getMatrixData()[8],
-            matrixData[9] + mat.getMatrixData()[9],
-            matrixData[10] + mat.getMatrixData()[10],
-            matrixData[11] + mat.getMatrixData()[11],
-            matrixData[12] + mat.getMatrixData()[12],
-            matrixData[13] + mat.getMatrixData()[13],
-            matrixData[14] + mat.getMatrixData()[14],
-            matrixData[15] + mat.getMatrixData()[15]};
+#pragma region Overloading operators
+void Matrix4x4::operator+=(const Matrix4x4 &mat) {
+    for(int i = 0; i < 16; i++){
+        matrixData[i] += mat.getMatrixData()[i];
+    }
 }
 
-Matrix4x4 Matrix4x4::operator*(const float scalar) const {
-    return {matrixData[0] * scalar,
-            matrixData[1] * scalar,
-            matrixData[2] * scalar,
-            matrixData[3] * scalar,
-            matrixData[4] * scalar,
-            matrixData[5] * scalar,
-            matrixData[6] * scalar,
-            matrixData[7] * scalar,
-            matrixData[8] * scalar,
-            matrixData[9] * scalar,
-            matrixData[10] * scalar,
-            matrixData[11] * scalar,
-            matrixData[12] * scalar,
-            matrixData[13] * scalar,
-            matrixData[14] * scalar,
-            matrixData[15] * scalar};
+void Matrix4x4::operator*=(float scalar) {
+    for(float& data : matrixData){
+        data *= scalar;
+    }
 }
 
-Matrix4x4 Matrix4x4::operator*(const Matrix4x4& mat) const {
-    // TODO idea to check(hope it works)
-    /*float data[16];
+void Matrix4x4::operator*=(const Matrix4x4 &mat) {
     int counter = 0;
     for(int i = 0; i <= 15; i += 4) {
         for (int j = 0; j < 4; j++){
-            data[counter] = matrixData[0 + j] * mat.getMatrixData()[0 + i] + matrixData[4 + j] * mat.getMatrixData()[1 + i]
+            matrixData[counter] = matrixData[0 + j] * mat.getMatrixData()[0 + i] + matrixData[4 + j] * mat.getMatrixData()[1 + i]
                     + matrixData[8 + j] * mat.getMatrixData()[2 + i] + matrixData[12 + j] * mat.getMatrixData()[3 + i];
             counter++;
         }
     }
-    return data; //should work*/
-
-    return {matrixData[0] * mat.getMatrixData()[0] + matrixData[4] * mat.getMatrixData()[1] + matrixData[8] * mat.getMatrixData()[2] + matrixData[12] * mat.getMatrixData()[3],
-            matrixData[1] * mat.getMatrixData()[0] + matrixData[5] * mat.getMatrixData()[1] + matrixData[9] * mat.getMatrixData()[2] + matrixData[13] * mat.getMatrixData()[3],
-            matrixData[2] * mat.getMatrixData()[0] + matrixData[6] * mat.getMatrixData()[1] + matrixData[10] * mat.getMatrixData()[2] + matrixData[14] * mat.getMatrixData()[3],
-            matrixData[3] * mat.getMatrixData()[0] + matrixData[7] * mat.getMatrixData()[1] + matrixData[11] * mat.getMatrixData()[2] + matrixData[15] * mat.getMatrixData()[3],
-
-            matrixData[0] * mat.getMatrixData()[4] + matrixData[4] * mat.getMatrixData()[5] + matrixData[8] * mat.getMatrixData()[6] + matrixData[12] * mat.getMatrixData()[7],
-            matrixData[1] * mat.getMatrixData()[4] + matrixData[5] * mat.getMatrixData()[5] + matrixData[9] * mat.getMatrixData()[6] + matrixData[13] * mat.getMatrixData()[7],
-            matrixData[2] * mat.getMatrixData()[4] + matrixData[6] * mat.getMatrixData()[5] + matrixData[10] * mat.getMatrixData()[6] + matrixData[14] * mat.getMatrixData()[7],
-            matrixData[3] * mat.getMatrixData()[4] + matrixData[7] * mat.getMatrixData()[5] + matrixData[11] * mat.getMatrixData()[6] + matrixData[15] * mat.getMatrixData()[7],
-
-            matrixData[0] * mat.getMatrixData()[8] + matrixData[4] * mat.getMatrixData()[9] + matrixData[8] * mat.getMatrixData()[10] + matrixData[12] * mat.getMatrixData()[11],
-            matrixData[1] * mat.getMatrixData()[8] + matrixData[5] * mat.getMatrixData()[9] + matrixData[9] * mat.getMatrixData()[10] + matrixData[13] * mat.getMatrixData()[11],
-            matrixData[2] * mat.getMatrixData()[8] + matrixData[6] * mat.getMatrixData()[9] + matrixData[10] * mat.getMatrixData()[10] + matrixData[14] * mat.getMatrixData()[11],
-            matrixData[3] * mat.getMatrixData()[8] + matrixData[7] * mat.getMatrixData()[9] + matrixData[11] * mat.getMatrixData()[10] + matrixData[15] * mat.getMatrixData()[11],
-
-            matrixData[0] * mat.getMatrixData()[12] + matrixData[4] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[12] + matrixData[12] * mat.getMatrixData()[15],
-            matrixData[1] * mat.getMatrixData()[12] + matrixData[5] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[13] + matrixData[13] * mat.getMatrixData()[15],
-            matrixData[2] * mat.getMatrixData()[12] + matrixData[6] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[14] * mat.getMatrixData()[15],
-            matrixData[3] * mat.getMatrixData()[12] + matrixData[7] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[15] * mat.getMatrixData()[15]
-    };
-
 }
+
+Matrix4x4 Matrix4x4::operator+(const Matrix4x4& mat) const{
+    Matrix4x4 matrix = Matrix4x4(*this);
+    matrix += mat;
+    return matrix;
+}
+
+Matrix4x4 Matrix4x4::operator*(const float scalar) const {
+    Matrix4x4 matrix = Matrix4x4(*this);
+    matrix *= scalar;
+    return matrix;
+}
+
+Matrix4x4 Matrix4x4::operator*(const Matrix4x4& mat) const {
+    Matrix4x4 matrix = Matrix4x4(*this);
+    matrix *= mat;
+    return matrix;
+}
+#pragma endregion
 
 void Matrix4x4::LoadIdentity() {
     memset(matrixData, 0, 16 * sizeof(float));
@@ -124,55 +93,126 @@ void Matrix4x4::LoadIdentity() {
     matrixData[15] = 1.0f;
 }
 
-// TODO make it for 4x4 matrix
-void Matrix4x4::setMatrixAsInverseOfGivenMatrix(const Matrix4x4& mat) {
-    float t1 = mat.getMatrixData()[0] * mat.getMatrixData()[4];
-    float t2 = mat.getMatrixData()[0] * mat.getMatrixData()[7];
-    float t3 = mat.getMatrixData()[3] * mat.getMatrixData()[1];
-    float t4 = mat.getMatrixData()[6] * mat.getMatrixData()[1];
-    float t5 = mat.getMatrixData()[3] * mat.getMatrixData()[2];
-    float t6 = mat.getMatrixData()[6] * mat.getMatrixData()[2];
+void Matrix4x4::Invert() {
+    float result[16];
 
-    float det = t1 * mat.getMatrixData()[8] - t2 * mat.getMatrixData()[5] - t3 * mat.getMatrixData()[8] +
-            t4 * mat.getMatrixData()[5] + t5 * mat.getMatrixData()[7] - t6 * mat.getMatrixData()[4];
+    result[0] = matrixData[5] * matrixData[10] * matrixData[15] -
+                matrixData[5] * matrixData[11] * matrixData[14] -
+                matrixData[9] * matrixData[6] * matrixData[15] +
+                matrixData[9] * matrixData[7] * matrixData[14] +
+                matrixData[13] * matrixData[6] * matrixData[11] -
+                matrixData[13] * matrixData[7] * matrixData[10];
 
-    if(det == 0.0f) return;
+    result[4] = -matrixData[4] * matrixData[10] * matrixData[15] +
+                matrixData[4] * matrixData[11] * matrixData[14] +
+                matrixData[8] * matrixData[6] * matrixData[15] -
+                matrixData[8] * matrixData[7] * matrixData[14] -
+                matrixData[12] * matrixData[6] * matrixData[11] +
+                matrixData[12] * matrixData[7] * matrixData[10];
 
-    float invd = 1.0f / det;
+    result[8] = matrixData[4] * matrixData[9] * matrixData[15] -
+                matrixData[4] * matrixData[11] * matrixData[13] -
+                matrixData[8] * matrixData[5] * matrixData[15] +
+                matrixData[8] * matrixData[7] * matrixData[13] +
+                matrixData[12] * matrixData[5] * matrixData[11] -
+                matrixData[12] * matrixData[7] * matrixData[9];
 
-    float m0 = (mat.getMatrixData()[4] * mat.getMatrixData()[8] - mat.getMatrixData()[7] * mat.getMatrixData()[5]) * invd;
-    float m3 = -(mat.getMatrixData()[3] * mat.getMatrixData()[8] - mat.getMatrixData()[6] * mat.getMatrixData()[5]) * invd;
-    float m6 = (mat.getMatrixData()[3] * mat.getMatrixData()[7] - mat.getMatrixData()[6] * mat.getMatrixData()[4]) * invd;
-    float m1 = -(mat.getMatrixData()[1] * mat.getMatrixData()[8] - mat.getMatrixData()[7] * mat.getMatrixData()[2]) * invd;
-    float m4 = (mat.getMatrixData()[0] * mat.getMatrixData()[8] - t6) * invd;
-    float m7 = -(t2 - t4) * invd;
-    float m2 = (mat.getMatrixData()[1] * mat.getMatrixData()[5] - mat.getMatrixData()[4] * mat.getMatrixData()[2]) * invd;
-    float m5 = -(mat.getMatrixData()[0] * mat.getMatrixData()[5] - t5) * invd;
-    float m8 = (t1 - t3) * invd;
+    result[12] = -matrixData[4] * matrixData[9] * matrixData[14] +
+                 matrixData[4] * matrixData[10] * matrixData[13] +
+                 matrixData[8] * matrixData[5] * matrixData[14] -
+                 matrixData[8] * matrixData[6] * matrixData[13] -
+                 matrixData[12] * matrixData[5] * matrixData[10] +
+                 matrixData[12] * matrixData[6] * matrixData[9];
 
-    matrixData[0] = m0;
-    matrixData[3] = m3;
-    matrixData[6] = m6;
-    matrixData[1] = m1;
-    matrixData[4] = m4;
-    matrixData[7] = m7;
-    matrixData[2] = m2;
-    matrixData[5] = m5;
-    matrixData[8] = m8;
+    result[1] = -matrixData[1] * matrixData[10] * matrixData[15] +
+                matrixData[1] * matrixData[11] * matrixData[14] +
+                matrixData[9] * matrixData[2] * matrixData[15] -
+                matrixData[9] * matrixData[3] * matrixData[14] -
+                matrixData[13] * matrixData[2] * matrixData[11] +
+                matrixData[13] * matrixData[3] * matrixData[10];
+
+    result[5] = matrixData[0] * matrixData[10] * matrixData[15] -
+                matrixData[0] * matrixData[11] * matrixData[14] -
+                matrixData[8] * matrixData[2] * matrixData[15] +
+                matrixData[8] * matrixData[3] * matrixData[14] +
+                matrixData[12] * matrixData[2] * matrixData[11] -
+                matrixData[12] * matrixData[3] * matrixData[10];
+
+    result[9] = -matrixData[0] * matrixData[9] * matrixData[15] +
+                matrixData[0] * matrixData[11] * matrixData[13] +
+                matrixData[8] * matrixData[1] * matrixData[15] -
+                matrixData[8] * matrixData[3] * matrixData[13] -
+                matrixData[12] * matrixData[1] * matrixData[11] +
+                matrixData[12] * matrixData[3] * matrixData[9];
+
+    result[13] = matrixData[0] * matrixData[9] * matrixData[14] -
+                 matrixData[0] * matrixData[10] * matrixData[13] -
+                 matrixData[8] * matrixData[1] * matrixData[14] +
+                 matrixData[8] * matrixData[2] * matrixData[13] +
+                 matrixData[12] * matrixData[1] * matrixData[10] -
+                 matrixData[12] * matrixData[2] * matrixData[9];
+
+    result[2] = matrixData[1] * matrixData[6] * matrixData[15] -
+                matrixData[1] * matrixData[7] * matrixData[14] -
+                matrixData[5] * matrixData[2] * matrixData[15] +
+                matrixData[5] * matrixData[3] * matrixData[14] +
+                matrixData[13] * matrixData[2] * matrixData[7] -
+                matrixData[13] * matrixData[3] * matrixData[6];
+
+    result[6] = -matrixData[0] * matrixData[6] * matrixData[15] +
+                matrixData[0] * matrixData[7] * matrixData[14] +
+                matrixData[4] * matrixData[2] * matrixData[15] -
+                matrixData[4] * matrixData[3] * matrixData[14] -
+                matrixData[12] * matrixData[2] * matrixData[7] +
+                matrixData[12] * matrixData[3] * matrixData[6];
+
+    result[10] = matrixData[0] * matrixData[5] * matrixData[15] -
+                 matrixData[0] * matrixData[7] * matrixData[13] -
+                 matrixData[4] * matrixData[1] * matrixData[15] +
+                 matrixData[4] * matrixData[3] * matrixData[13] +
+                 matrixData[12] * matrixData[1] * matrixData[7] -
+                 matrixData[12] * matrixData[3] * matrixData[5];
+
+    result[14] = -matrixData[0] * matrixData[5] * matrixData[14] +
+                 matrixData[0] * matrixData[6] * matrixData[13] +
+                 matrixData[4] * matrixData[1] * matrixData[14] -
+                 matrixData[4] * matrixData[2] * matrixData[13] -
+                 matrixData[12] * matrixData[1] * matrixData[6] +
+                 matrixData[12] * matrixData[2] * matrixData[5];
+
+    result[3] = -matrixData[1] * matrixData[6] * matrixData[11] +
+                matrixData[1] * matrixData[7] * matrixData[10] +
+                matrixData[5] * matrixData[2] * matrixData[11] -
+                matrixData[5] * matrixData[3] * matrixData[10] -
+                matrixData[9] * matrixData[2] * matrixData[7] +
+                matrixData[9] * matrixData[3] * matrixData[6];
+
+    result[7] = matrixData[0] * matrixData[6] * matrixData[11] -
+                matrixData[0] * matrixData[7] * matrixData[10] -
+                matrixData[4] * matrixData[2] * matrixData[11] +
+                matrixData[4] * matrixData[3] * matrixData[10] +
+                matrixData[8] * matrixData[2] * matrixData[7] -
+                matrixData[8] * matrixData[3] * matrixData[6];
+
+    result[11] = -matrixData[0] * matrixData[5] * matrixData[11] +
+                 matrixData[0] * matrixData[7] * matrixData[9] +
+                 matrixData[4] * matrixData[1] * matrixData[11] -
+                 matrixData[4] * matrixData[3] * matrixData[9] -
+                 matrixData[8] * matrixData[1] * matrixData[7] +
+                 matrixData[8] * matrixData[3] * matrixData[5];
+
+    result[15] = matrixData[0] * matrixData[5] * matrixData[10] -
+                 matrixData[0] * matrixData[6] * matrixData[9] -
+                 matrixData[4] * matrixData[1] * matrixData[10] +
+                 matrixData[4] * matrixData[2] * matrixData[9] +
+                 matrixData[8] * matrixData[1] * matrixData[6] -
+                 matrixData[8] * matrixData[2] * matrixData[5];
+
+    //TODO calc det and result/det to matrix data
 }
 
-void Matrix4x4::InvertMatrix() {
-    setMatrixAsInverseOfGivenMatrix(*this);
-}
-
-Matrix4x4 Matrix4x4::GetInverseOfMatrix() const {
-    Matrix4x4 result;
-    result.setMatrixAsInverseOfGivenMatrix(*this);
-    return result;
-}
-
-void Matrix4x4::setMatrixAsTransposeOfGivenMatrix(const Matrix4x4 &mat) {
-   /*
+void Matrix4x4::Transpose() {
+    /*
     0 4 8  12
     1 5 9  13
     2 6 10 14
@@ -183,42 +223,39 @@ void Matrix4x4::setMatrixAsTransposeOfGivenMatrix(const Matrix4x4 &mat) {
     8  9  10 11
     12 13 14 15*/
 
-    matrixData[1] = mat.getMatrixData()[4];
-    matrixData[2] = mat.getMatrixData()[8];
-    matrixData[3] = mat.getMatrixData()[12];
-    matrixData[4] = mat.getMatrixData()[1];
+    float helper[16];
+    std::memcpy(helper, matrixData, 16*sizeof(float));
 
-    matrixData[6] = mat.getMatrixData()[9];
-    matrixData[7] = mat.getMatrixData()[13];
-    matrixData[8] = mat.getMatrixData()[2];
-    matrixData[9] = mat.getMatrixData()[6];
+    matrixData[1] = helper[4];
+    matrixData[2] = helper[8];
+    matrixData[3] = helper[12];
+    matrixData[4] = helper[1];
 
-    matrixData[11] = mat.getMatrixData()[14];
-    matrixData[12] = mat.getMatrixData()[3];
-    matrixData[13] = mat.getMatrixData()[7];
-    matrixData[14] = mat.getMatrixData()[11];
+    matrixData[6] = helper[9];
+    matrixData[7] = helper[13];
+    matrixData[8] = helper[2];
+    matrixData[9] = helper[6];
+
+    matrixData[11] = helper[14];
+    matrixData[12] = helper[3];
+    matrixData[13] = helper[7];
+    matrixData[14] = helper[11];
 }
 
-Matrix4x4 Matrix4x4::GetTransposeOfMatrix() const {
-    Matrix4x4 result;
-    result.setMatrixAsTransposeOfGivenMatrix(*this);
-    return result;
-}
-
-void Matrix4x4::SetTranslationPart(const Vector& translation) {
+void Matrix4x4::Translate(const Vector& translation) {
     matrixData[12] = translation.x;
     matrixData[12] = translation.y;
     matrixData[12] = translation.z;
 }
 
-void Matrix4x4::SetScale(const Vector &scale) {
+void Matrix4x4::Scale(const Vector &scale) {
     LoadIdentity();
     matrixData[0] = scale.x;
     matrixData[5] = scale.y;
     matrixData[10] = scale.z;
 }
 
-void Matrix4x4::SetUniformScale(const float scale) {
+void Matrix4x4::Scale(const float scale) {
     LoadIdentity();
     matrixData[0] = scale;
     matrixData[5] = scale;
@@ -226,10 +263,11 @@ void Matrix4x4::SetUniformScale(const float scale) {
 }
 
 void Matrix4x4::SetRotationAxis(const float angle, const Vector &axis) {
-    Vector3 u = axis.getNormalized();
+    Vector u = axis;
+    u.normalize();
 
-    float sinAngle = std::sin(M_PI * angle / 180);
-    float cosAngle = std::cos(M_PI * angle / 180);
+    auto sinAngle = (float)std::sin(M_PI * angle / 180);
+    auto cosAngle = (float)std::cos(M_PI * angle / 180);
     float oneMinusCosAngle = 1.0f - cosAngle;
 
     LoadIdentity();

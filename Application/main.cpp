@@ -3,6 +3,7 @@
 
 int main() {
     Matrix4x4 matrix;
-    std::cout << "Hello, World!" << std::endl;
+    matrix.LoadIdentity();
+
     return 0;
 }

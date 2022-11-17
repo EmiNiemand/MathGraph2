@@ -24,25 +24,25 @@ public:
 
     const float *getMatrixData() const;
 
+    void operator+=(const Matrix4x4& mat);
+    void operator*=(float scalar);
+    void operator*=(const Matrix4x4& mat);
+
     Matrix4x4 operator+(const Matrix4x4& mat) const;
     Matrix4x4 operator*(float scalar) const;
     Matrix4x4 operator*(const Matrix4x4& mat) const;
 
     void LoadIdentity();
-    void InvertMatrix();
-    Matrix4x4 GetInverseOfMatrix() const;
-    Matrix4x4 GetTransposeOfMatrix() const;
-    //TODO Vec3
-    void SetTranslationPart(const Vector& translation);
-    void SetScale(const Vector& scale);
-    void SetUniformScale(float scale);
-    void SetRotationAxis(float angle, Vector& axis);
+    void Invert();
+    void Transpose();
+
+    void Translate(const Vector& translation);
+    void Scale(const Vector& scale);
+    void Scale(float scale);
+    void SetRotationAxis(float angle, const Vector& axis);
     void SetRotationX(float angle);
     void SetRotationY(float angle);
     void SetRotationZ(float angle);
-private:
-    void setMatrixAsInverseOfGivenMatrix(const Matrix4x4& mat);
-    void setMatrixAsTransposeOfGivenMatrix(const Matrix4x4& mat);
 };
 
 #endif //MATHGRAPH2_MATRIX4X4_H

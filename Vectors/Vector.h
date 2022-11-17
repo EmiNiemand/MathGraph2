@@ -9,11 +9,10 @@
 #include <cmath>
 
 class Vector {
-private:
-    float x, y, z;
 public:
+    float x, y, z, w;
     Vector();
-    Vector(float x, float y, float z);
+    Vector(float x, float y, float z, float w);
     Vector(Vector p1, Vector p2);
     Vector(const Vector &v);
     ~Vector();
