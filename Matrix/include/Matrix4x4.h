@@ -28,9 +28,11 @@ public:
     void operator*=(float scalar);
     void operator*=(const Matrix4x4& mat);
 
+
     Matrix4x4 operator+(const Matrix4x4& mat) const;
     Matrix4x4 operator*(float scalar) const;
     Matrix4x4 operator*(const Matrix4x4& mat) const;
+    Vector operator*(const Vector& vec) const;
 
     void LoadIdentity();
     void Invert();

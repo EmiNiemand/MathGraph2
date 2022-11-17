@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cmath>
+class Matrix4x4;
 
 class Vector {
 public:

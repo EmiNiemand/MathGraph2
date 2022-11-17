@@ -149,11 +149,7 @@ Vector Vector::cross(Vector& v1, Vector& v2)
 }
 
 std::string Vector::toString() {
-    if((int)x != x || (int)y != y || (int)z != z || (int)w != w)
-        return "[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "]";
-
-    return "[" + std::to_string((int)x) + ", " + std::to_string((int)y) + ", " + std::to_string((int)z) + ", "
-    + std::to_string((int)w) + "]";
+    return "[" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ", " + std::to_string(w) + "]";
 }
 
 float Vector::calcAngle(Vector& v1, Vector& v2) {

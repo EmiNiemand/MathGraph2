@@ -57,34 +57,15 @@ void Matrix4x4::operator*=(float scalar) {
 
 void Matrix4x4::operator*=(const Matrix4x4 &mat) {
     //TODO: doesn't work, need to fix
-    //int counter = 0;
-    //for(int i = 0; i <= 15; i += 4) {
-    //    for (int j = 0; j < 4; j++){
-    //        matrixData[counter] = matrixData[0 + j] * mat.getMatrixData()[0 + i] + matrixData[4 + j] * mat.getMatrixData()[1 + i]
-    //                + matrixData[8 + j] * mat.getMatrixData()[2 + i] + matrixData[12 + j] * mat.getMatrixData()[3 + i];
-    //        counter++;
-    //    }
-    //}
     float matrix[16];
-    matrix[0] = matrixData[0] * mat.getMatrixData()[0] + matrixData[4] * mat.getMatrixData()[1] + matrixData[8] * mat.getMatrixData()[2] + matrixData[12] * mat.getMatrixData()[3];
-    matrix[1] = matrixData[1] * mat.getMatrixData()[0] + matrixData[5] * mat.getMatrixData()[1] + matrixData[9] * mat.getMatrixData()[2] + matrixData[13] * mat.getMatrixData()[3];
-    matrix[2] = matrixData[2] * mat.getMatrixData()[0] + matrixData[6] * mat.getMatrixData()[1] + matrixData[10] * mat.getMatrixData()[2] + matrixData[14] * mat.getMatrixData()[3];
-    matrix[3] = matrixData[3] * mat.getMatrixData()[0] + matrixData[7] * mat.getMatrixData()[1] + matrixData[11] * mat.getMatrixData()[2] + matrixData[15] * mat.getMatrixData()[3];
-
-    matrix[4] = matrixData[0] * mat.getMatrixData()[4] + matrixData[4] * mat.getMatrixData()[5] + matrixData[8] * mat.getMatrixData()[6] + matrixData[12] * mat.getMatrixData()[7];
-    matrix[5] = matrixData[1] * mat.getMatrixData()[4] + matrixData[5] * mat.getMatrixData()[5] + matrixData[9] * mat.getMatrixData()[6] + matrixData[13] * mat.getMatrixData()[7];
-    matrix[6] = matrixData[2] * mat.getMatrixData()[4] + matrixData[6] * mat.getMatrixData()[5] + matrixData[10] * mat.getMatrixData()[6] + matrixData[14] * mat.getMatrixData()[7];
-    matrix[7] = matrixData[3] * mat.getMatrixData()[4] + matrixData[7] * mat.getMatrixData()[5] + matrixData[11] * mat.getMatrixData()[6] + matrixData[15] * mat.getMatrixData()[7];
-
-    matrix[8] = matrixData[0] * mat.getMatrixData()[8] + matrixData[4] * mat.getMatrixData()[9] + matrixData[8] * mat.getMatrixData()[10] + matrixData[12] * mat.getMatrixData()[11];
-    matrix[9] = matrixData[1] * mat.getMatrixData()[8] + matrixData[5] * mat.getMatrixData()[9] + matrixData[9] * mat.getMatrixData()[10] + matrixData[13] * mat.getMatrixData()[11];
-    matrix[10] = matrixData[2] * mat.getMatrixData()[8] + matrixData[6] * mat.getMatrixData()[9] + matrixData[10] * mat.getMatrixData()[10] + matrixData[14] * mat.getMatrixData()[11];
-    matrix[11] = matrixData[3] * mat.getMatrixData()[8] + matrixData[7] * mat.getMatrixData()[9] + matrixData[11] * mat.getMatrixData()[10] + matrixData[15] * mat.getMatrixData()[11];
-
-    matrix[12] = matrixData[0] * mat.getMatrixData()[12] + matrixData[4] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[12] * mat.getMatrixData()[15];
-    matrix[13] = matrixData[1] * mat.getMatrixData()[12] + matrixData[5] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[13] * mat.getMatrixData()[15];
-    matrix[14] = matrixData[2] * mat.getMatrixData()[12] + matrixData[6] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[14] * mat.getMatrixData()[15];
-    matrix[15] = matrixData[3] * mat.getMatrixData()[12] + matrixData[7] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[15] * mat.getMatrixData()[15];
+    int counter = 0;
+    for(int i = 0; i <= 15; i += 4) {
+        for (int j = 0; j < 4; j++){
+            matrix[counter] = matrixData[0 + j] * mat.getMatrixData()[0 + i] + matrixData[4 + j] * mat.getMatrixData()[1 + i]
+                    + matrixData[8 + j] * mat.getMatrixData()[2 + i] + matrixData[12 + j] * mat.getMatrixData()[3 + i];
+            counter++;
+        }
+    }
     std::memcpy(matrixData, matrix, 16*sizeof(float));
 }
 
@@ -104,6 +85,14 @@ Matrix4x4 Matrix4x4::operator*(const Matrix4x4& mat) const {
     Matrix4x4 matrix = Matrix4x4(*this);
     matrix *= mat;
     return matrix;
+}
+
+Vector Matrix4x4::operator*(const Vector &vec) const {
+    Vector vector(vec.x*matrixData[0] + vec.y*matrixData[4] +vec.z*matrixData[8] + vec.w*matrixData[12],
+                  vec.x*matrixData[1] + vec.y*matrixData[5] +vec.z*matrixData[9] + vec.w*matrixData[13],
+                  vec.x*matrixData[2] + vec.y*matrixData[6] +vec.z*matrixData[10] + vec.w*matrixData[14],
+                  vec.x*matrixData[3] + vec.y*matrixData[7] +vec.z*matrixData[11] + vec.w*matrixData[15]);
+    return vector;
 }
 #pragma endregion
 
@@ -236,7 +225,6 @@ void Matrix4x4::Invert() {
                  matrixData[8] * matrixData[1] * matrixData[6] -
                  matrixData[8] * matrixData[2] * matrixData[5];
 
-    //TODO calc result/det to matrix data
     for(auto &value : result) {
         value = value/detValue;
     }
@@ -378,12 +366,6 @@ void Matrix4x4::SetRotationZ(const float angle) {
 }
 
 std::string Matrix4x4::ToString() {
-    /*
-        0 4 8  12
-        1 5 9  13
-        2 6 10 14
-        3 7 11 15
-     */
     std::string returnVal =
             std::to_string(matrixData[0]) + "\t" + std::to_string(matrixData[4]) + "\t" + std::to_string(matrixData[8]) + "\t" + std::to_string(matrixData[12]) + "\n" +
             std::to_string(matrixData[1]) + "\t" + std::to_string(matrixData[5]) + "\t" + std::to_string(matrixData[9]) + "\t" + std::to_string(matrixData[13]) + "\n" +
