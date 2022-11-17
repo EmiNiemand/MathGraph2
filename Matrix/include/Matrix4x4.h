@@ -35,6 +35,7 @@ public:
     void LoadIdentity();
     void Invert();
     void Transpose();
+    float Det();
 
     void Translate(const Vector& translation);
     void Scale(const Vector& scale);
@@ -43,6 +44,8 @@ public:
     void SetRotationX(float angle);
     void SetRotationY(float angle);
     void SetRotationZ(float angle);
+
+    std::string ToString();
 };
 
 #endif //MATHGRAPH2_MATRIX4X4_H
