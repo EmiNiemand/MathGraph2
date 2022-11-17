@@ -81,8 +81,8 @@ void Matrix4x4::operator*=(const Matrix4x4 &mat) {
     matrix[10] = matrixData[2] * mat.getMatrixData()[8] + matrixData[6] * mat.getMatrixData()[9] + matrixData[10] * mat.getMatrixData()[10] + matrixData[14] * mat.getMatrixData()[11];
     matrix[11] = matrixData[3] * mat.getMatrixData()[8] + matrixData[7] * mat.getMatrixData()[9] + matrixData[11] * mat.getMatrixData()[10] + matrixData[15] * mat.getMatrixData()[11];
 
-    matrix[12] = matrixData[0] * mat.getMatrixData()[12] + matrixData[4] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[12] + matrixData[12] * mat.getMatrixData()[15];
-    matrix[13] = matrixData[1] * mat.getMatrixData()[12] + matrixData[5] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[13] + matrixData[13] * mat.getMatrixData()[15];
+    matrix[12] = matrixData[0] * mat.getMatrixData()[12] + matrixData[4] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[12] * mat.getMatrixData()[15];
+    matrix[13] = matrixData[1] * mat.getMatrixData()[12] + matrixData[5] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[13] * mat.getMatrixData()[15];
     matrix[14] = matrixData[2] * mat.getMatrixData()[12] + matrixData[6] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[14] * mat.getMatrixData()[15];
     matrix[15] = matrixData[3] * mat.getMatrixData()[12] + matrixData[7] * mat.getMatrixData()[13] + matrixData[14] * mat.getMatrixData()[14] + matrixData[15] * mat.getMatrixData()[15];
     std::memcpy(matrixData, matrix, 16*sizeof(float));
