@@ -294,8 +294,8 @@ float Matrix4x4::Det() {
 
 void Matrix4x4::Translate(const Vector& translation) {
     matrixData[12] = translation.x;
-    matrixData[12] = translation.y;
-    matrixData[12] = translation.z;
+    matrixData[13] = translation.y;
+    matrixData[14] = translation.z;
 }
 
 void Matrix4x4::Scale(const Vector &scale) {

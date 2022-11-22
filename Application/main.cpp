@@ -73,5 +73,18 @@ int main() {
     printf("m1 * m2: \n%s\n", (testAdd*testAdd2).ToString().c_str());
     printf("m2 * m1: \n%s\n", (testAdd2*testAdd).ToString().c_str());
 
+    Matrix4x4 test;
+    test.LoadIdentity();
+    Vector transVec(3, 4, 7, 1);
+    test.Translate(transVec);
+    printf("translate: \n%s\n", test.ToString().c_str());
+
+    test.LoadIdentity();
+    test.Scale(transVec);
+    printf("scale by vec: \n%s\n", test.ToString().c_str());
+
+    test.LoadIdentity();
+    test.Scale(3);
+    printf("scale by number: \n%s\n", test.ToString().c_str());
     return 0;
 }
