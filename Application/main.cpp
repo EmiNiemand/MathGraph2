@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Matrix4x4.h"
+#include "Vector4.h"
 
 int main() {
 
@@ -62,10 +63,10 @@ int main() {
     // VECTOR ROTATION
     // ---------------
     matrix.SetRotationY(90.0f);
-    Vector vector(1, 0, 0, 1);
+    Vector4 vector(1, 0, 0, 1);
     printf("Matrix that rotates vector by 90 degrees on Y axis:\n%s\n", matrix.ToString().c_str());
-    printf("Vector to rotate:\n%s\n", vector.toString().c_str());
-    printf("Vector after rotation:\n%s\n\n", (matrix * vector).toString().c_str());
+    printf("Vector4 to rotate:\n%s\n", vector.toString().c_str());
+    printf("Vector4 after rotation:\n%s\n\n", (matrix * vector).toString().c_str());
 
     // NON-COMMUTABILITY OF MATRIX MULTIPLICATION
     // ------------------------------------------
