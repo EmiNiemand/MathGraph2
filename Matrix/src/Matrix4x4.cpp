@@ -2,7 +2,7 @@
 // Created by szymo on 07/11/2022.
 //
 
-#include "../include/Matrix4x4.h"
+#include "Matrix4x4.h"
 #include <cstring>
 #include <cmath>
 
@@ -87,8 +87,8 @@ Matrix4x4 Matrix4x4::operator*(const Matrix4x4& mat) const {
     return matrix;
 }
 
-Vector Matrix4x4::operator*(const Vector &vec) const {
-    Vector vector(vec.x*matrixData[0] + vec.y*matrixData[4] +vec.z*matrixData[8] + vec.w*matrixData[12],
+Vector4 Matrix4x4::operator*(const Vector4 &vec) const {
+    Vector4 vector(vec.x*matrixData[0] + vec.y*matrixData[4] +vec.z*matrixData[8] + vec.w*matrixData[12],
                   vec.x*matrixData[1] + vec.y*matrixData[5] +vec.z*matrixData[9] + vec.w*matrixData[13],
                   vec.x*matrixData[2] + vec.y*matrixData[6] +vec.z*matrixData[10] + vec.w*matrixData[14],
                   vec.x*matrixData[3] + vec.y*matrixData[7] +vec.z*matrixData[11] + vec.w*matrixData[15]);
@@ -292,13 +292,13 @@ float Matrix4x4::Det() {
 
 }
 
-void Matrix4x4::Translate(const Vector& translation) {
+void Matrix4x4::Translate(const Vector4& translation) {
     matrixData[12] = translation.x;
     matrixData[13] = translation.y;
     matrixData[14] = translation.z;
 }
 
-void Matrix4x4::Scale(const Vector &scale) {
+void Matrix4x4::Scale(const Vector4 &scale) {
     LoadIdentity();
     matrixData[0] = scale.x;
     matrixData[5] = scale.y;
@@ -312,8 +312,8 @@ void Matrix4x4::Scale(const float scale) {
     matrixData[10] = scale;
 }
 
-void Matrix4x4::SetRotationAxis(const float angle, const Vector &axis) {
-    Vector u = axis;
+void Matrix4x4::SetRotationAxis(const float angle, const Vector4 &axis) {
+    Vector4 u = axis;
     u.normalize();
 
     auto sinAngle = (float)std::sin(M_PI * angle / 180);

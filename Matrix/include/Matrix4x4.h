@@ -6,7 +6,7 @@
 #define MATHGRAPH2_MATRIX4X4_H
 
 
-#include "Vector.h"
+#include "Vector4.h"
 
 class Matrix4x4 {
 private:
@@ -32,17 +32,17 @@ public:
     Matrix4x4 operator+(const Matrix4x4& mat) const;
     Matrix4x4 operator*(float scalar) const;
     Matrix4x4 operator*(const Matrix4x4& mat) const;
-    Vector operator*(const Vector& vec) const;
+    Vector4 operator*(const Vector4& vec) const;
 
     void LoadIdentity();
     void Invert();
     void Transpose();
     float Det();
 
-    void Translate(const Vector& translation);
-    void Scale(const Vector& scale);
+    void Translate(const Vector4& translation);
+    void Scale(const Vector4& scale);
     void Scale(float scale);
-    void SetRotationAxis(float angle, const Vector& axis);
+    void SetRotationAxis(float angle, const Vector4& axis);
     void SetRotationX(float angle);
     void SetRotationY(float angle);
     void SetRotationZ(float angle);
