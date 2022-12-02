@@ -33,6 +33,7 @@ public:
 
     Vector3 GetVector();
     float GetScalar() const;
+    Quaternion Inverse();
 
     std::string ToString();
 };

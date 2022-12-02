@@ -3,8 +3,8 @@
 #include "Quaternion.h"
 
 int main() {
-    Quaternion q1(1, Vector3(2, 3, 4));
-    Quaternion q2(9, Vector3(8, 7, 6));
+    Quaternion q1(1, Vector3(0, 3, 5));
+    Quaternion q2(1, Vector3(1, 0, 2));
 
     printf("Q1: %s\n", q1.ToString().c_str());
     printf("Q2: %s\n\n", q2.ToString().c_str());
