@@ -5,16 +5,17 @@
 #ifndef MATHGRAPH2_LINE_H
 #define MATHGRAPH2_LINE_H
 
-#include "Vector3.h"
 #include "Plane.h"
 
 class NoIntersectionException : std::exception {
 };
 
 class Line {
+public:
     Vector3 direction;
     Vector3 point;
-public:
+
+    Line();
     Line(const Vector3 &point, const Vector3 &direction);
 
     Vector3 IntersectionPointWithLine(Line line);
@@ -22,6 +23,8 @@ public:
 
     float CalcAngleWithLine(Line line);
     float CalcAngleWithPlane(Plane plane);
+
+    std::string toString();
 };
 
 

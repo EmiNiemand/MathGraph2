@@ -4,6 +4,8 @@
 
 #include "../lib/Line.h"
 
+Line::Line() {}
+
 Line::Line(const Vector3 &point, const Vector3 &direction) : point(point), direction(direction) {}
 
 Vector3 Line::IntersectionPointWithLine(Line line) {
@@ -37,7 +39,9 @@ float Line::CalcAngleWithLine(Line line) {
 }
 
 float Line::CalcAngleWithPlane(Plane plane) {
-    Vector3 normal(plane.a, plane.b, plane.c);
-    float angle = M_PI / 2 - Vector3::calcAngle(normal, direction);
-    return angle;
+    return M_PI / 2 - Vector3::calcAngle(plane.normal, direction);
+}
+
+std::string Line::toString() {
+    return std::string("[" + point.toString() + ", " + direction.toString() + "]");
 }

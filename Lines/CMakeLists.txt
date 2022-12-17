@@ -1,6 +1,6 @@
 project(Lines)
 
-add_library(${PROJECT_NAME} src/Line.cpp lib/Line.h src/Plane.cpp lib/Plane.h)
+add_library(${PROJECT_NAME} src/Line.cpp lib/Line.h src/Plane.cpp lib/Plane.h src/Segment.cpp lib/Segment.h src/Sphere.cpp lib/Sphere.h)
 
 target_include_directories( ${PROJECT_NAME}
         PUBLIC ${PROJECT_SOURCE_DIR}/include
