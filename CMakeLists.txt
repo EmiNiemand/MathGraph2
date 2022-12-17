@@ -3,6 +3,7 @@ project(MathGraph2)
 
 set(CMAKE_CXX_STANDARD 14)
 
+add_subdirectory(Lines)
 add_subdirectory(Matrix)
 add_subdirectory(Vectors)
 add_subdirectory(Quaternion)
