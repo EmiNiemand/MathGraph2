@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../Lines/lib/Line.h"
-#include "../Lines/lib/Segment.h"
-#include "../Lines/lib/Sphere.h"
+#include "Line.h"
+#include "Segment.h"
+#include "Sphere.h"
 
 int main() {
     Line line({-2, 5, 0}, {3, 1, 5});

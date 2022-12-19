@@ -2,7 +2,7 @@
 // Created by szymo on 17/12/2022.
 //
 
-#include "../lib/Sphere.h"
+#include "Sphere.h"
 
 
 Sphere::Sphere(const Vector3 &center, float radius) : center(center), radius(radius) {}

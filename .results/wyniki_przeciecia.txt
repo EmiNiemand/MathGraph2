@@ -1,0 +1,29 @@
+Zadanie1:
+	There is no intersecting point
+	
+Zadanie2:
+	Angle between line and line2: 68.196256
+	
+Zadanie3:
+	Intersection Point [line3 -> plane]: [1.000000, 1.000000, 1.000000]
+	
+Zadanie4:
+	Angle between line and plane [line3 -> plane]: 30.852022
+	
+Zadanie5:
+	Line between plane2 and plane3 [plane2 -> plane3]: 
+		[[0.000000, -5.500000, 2.500000], [-4.000000, 2.000000, 10.000000]]
+	
+Zadanie6:
+	Angle between plane2 and plane3 [plane2 -> plane3]: 
+		61.289486
+		
+Zadanie7:
+	Intersection Point [segment -> segment2]: 
+		[6.250000, 6.250000, 4.500000]
+		
+Zadanie 1(8):
+	Intersection Point nr[1] [sphere -> line]: 
+		[4.000000, 1.000000, -3.000000]
+	Intersection Point nr[2] [sphere -> line]: 
+		[1.000000, -5.000000, 0.000000]

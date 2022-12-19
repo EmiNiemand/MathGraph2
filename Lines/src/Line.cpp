@@ -2,7 +2,7 @@
 // Created by szymo on 17/12/2022.
 //
 
-#include "../lib/Line.h"
+#include "Line.h"
 
 Line::Line() {}
 

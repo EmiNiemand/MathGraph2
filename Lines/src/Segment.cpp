@@ -2,8 +2,8 @@
 // Created by szymo on 17/12/2022.
 //
 
-#include "../lib/Segment.h"
-#include "../lib/Line.h"
+#include "Segment.h"
+#include "Line.h"
 
 Segment::Segment(const Vector3 &startPoint, const Vector3 &endPoint) : startPoint(startPoint), endPoint(endPoint) {}
 
