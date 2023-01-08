@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <cmath>
+
+class Vector3;
 class Matrix4x4;
 
 class Vector4 {
@@ -16,6 +18,7 @@ public:
     Vector4(float x, float y, float z, float w);
     Vector4(Vector4 p1, Vector4 p2);
     Vector4(const Vector4 &v);
+    Vector4(Vector3 vector3);
     ~Vector4();
 
     void operator+=(const Vector4& v);

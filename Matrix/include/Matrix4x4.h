@@ -5,7 +5,7 @@
 #ifndef MATHGRAPH2_MATRIX4X4_H
 #define MATHGRAPH2_MATRIX4X4_H
 
-
+#include <string>
 #include "Vector4.h"
 
 class Matrix4x4 {

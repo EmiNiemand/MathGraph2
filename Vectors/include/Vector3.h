@@ -5,9 +5,9 @@
 #ifndef MATHGRAPH2_VECTOR3_H
 #define MATHGRAPH2_VECTOR3_H
 
-
 #include <iostream>
 #include <cmath>
+#include "Vector4.h"
 
 class Vector3 {
 public:
@@ -17,6 +17,7 @@ public:
     Vector3(float x, float y, float z);
     Vector3(Vector3 p1, Vector3 p2);
     Vector3(const Vector3 &v);
+    Vector3(Vector4 vector4);
     ~Vector3();
 
     void operator+=(const Vector3& v);

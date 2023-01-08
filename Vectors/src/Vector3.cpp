@@ -150,3 +150,9 @@ float Vector3::calcAngle(Vector3& v1, Vector3& v2) {
     angle = std::acos(angle / (v1.length() * v2.length()));
     return angle;
 }
+
+Vector3::Vector3(Vector4 vector4) {
+    x = vector4.x;
+    y = vector4.y;
+    z = vector4.z;
+}

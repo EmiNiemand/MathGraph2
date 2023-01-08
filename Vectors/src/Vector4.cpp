@@ -3,6 +3,7 @@
 //
 
 #include "Vector4.h"
+#include "Vector3.h"
 
 Vector4::Vector4() : x(0), y(0), z(0), w(0) {
 }
@@ -23,6 +24,13 @@ Vector4::Vector4(const Vector4 &v) {
     y = v.y;
     z = v.z;
     w = v.w;
+}
+
+Vector4::Vector4(Vector3 vector3) {
+    x = vector3.x;
+    y = vector3.y;
+    z = vector3.z;
+    w = 1;
 }
 
 Vector4::~Vector4() {
