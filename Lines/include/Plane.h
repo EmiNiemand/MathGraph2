@@ -11,9 +11,13 @@ class Line;
 
 class Plane {
 public:
+
     float a, b, c, d;
     Vector3 normal;
+
+    Plane();
     Plane(float a, float b, float c, float d);
+    Plane(Vector3 A, Vector3 B, Vector3 C, Vector3 D);
 
     Line IntersectionLineWithPlane(Plane plane);
     float CalcAngleWithPlane(Plane plane);

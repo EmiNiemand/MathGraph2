@@ -7,13 +7,19 @@
 
 
 #include "../../Vectors/include/Vector3.h"
+#include "../../Lines/include/Plane.h"
 
 class Cube {
     Vector3 cubePoints[8];
+    Plane cubePlanes[6];
 public:
     Cube(float length);
 
     void PrintCubePoints();
+
+    const Vector3 *getCubePoints() const;
+
+    const Plane *getCubePlanes() const;
 };
 
 
