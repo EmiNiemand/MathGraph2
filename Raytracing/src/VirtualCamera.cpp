@@ -11,20 +11,21 @@ VirtualCamera::VirtualCamera(const Vector3 &position) : position(position) {
 
 // TODO: check in geogebra
 void VirtualCamera::CalculateViewPoints() {
-    Vector4 lookingDirection(position);
+    Vector4 lookingDirection(position * -1);
     Vector4 pointDistance(lookingDirection / 2);
     Vector4 viewDistance(lookingDirection / 2 * ViewRatio);
 
     Vector4 screenHor;
     Vector4 screenVert;
-    if(std::ceil(std::abs(lookingDirection.x)) != 0 || std::ceil(std::abs(lookingDirection.z)) != 0){
+    float margin = 0.0001;
+    if(std::abs(lookingDirection.x) >= margin || std::abs(lookingDirection.z) >= margin){
         Vector4 up(0, 1, 0, 1);
         screenHor = Vector4::cross(viewDistance, up);
-//        printf("[%f, %f, %f]\n", screenHor.x, screenHor.y, screenHor.z);
+//        printf("Hor [%f, %f, %f]\n", screenHor.x, screenHor.y, screenHor.z);
         Vector4 normalized = screenHor / Vector3(screenHor).length();
 //        printf("[%f, %f, %f]\n", normalized.x, normalized.y, normalized.z);
         screenVert = Vector4::cross(viewDistance, normalized);
-//        printf("[%f, %f, %f]\n", screenVert.x, screenVert.y, screenVert.z);
+//        printf("Vert [%f, %f, %f]\n", screenVert.x, screenVert.y, screenVert.z);
     }
     else {
         Vector4 up(0, 0, 1, 1);
@@ -35,22 +36,28 @@ void VirtualCamera::CalculateViewPoints() {
         screenVert = Vector4::cross(viewDistance, normalized);
 //        printf("[%f, %f, %f]\n", screenVert.x, screenVert.y, screenVert.z);
     }
-    view[0] = pointDistance + screenHor + screenVert;
-    view[1] = pointDistance + (screenHor + screenVert) * -1;
-    printf("[%f, %f, %f]\n", view[0].x, view[0].y, view[0].z);
-    printf("[%f, %f, %f]\n", view[1].x, view[1].y, view[1].z);
-    CalculateRaycastPoints(screenHor, screenVert);
+
+    Vector3 normalizedHor = screenHor / Vector3(screenHor).length();
+//    printf("Hor length %f\n", normalizedHor.length());
+    Vector3 normalizedVert = screenVert / Vector3(screenVert).length();
+//    printf("Vert length %f\n", normalizedVert.length());
+//    printf("Hor [%f, %f, %f]\n", normalizedHor.x, normalizedHor.y, normalizedHor.z);
+//    printf("Hor [%f, %f, %f]\n", normalizedVert.x, normalizedVert.y, normalizedVert.z);
+    view[0] = viewDistance * -1 + (normalizedHor + normalizedVert);
+    view[1] = viewDistance * -1 - (normalizedHor + normalizedVert);
+
+    printf("View0 [%f, %f, %f]\n", view[0].x, view[0].y, view[0].z);
+    printf("View1 [%f, %f, %f]\n", view[1].x, view[1].y, view[1].z);
+    CalculateRaycastPoints(normalizedHor, normalizedVert);
 }
 
 void VirtualCamera::CalculateRaycastPoints(Vector3 vecHor, Vector3 vecVert) {
-    vecHor.normalize();
-    vecVert.normalize();
     float length = Vector3(view[0] - view[1]).length() / std::sqrt(2) / 60;
-//    printf("[%f, %f, %f]\n", length, length, length);
+    printf("%f\n", length);
 
     for(int i = 0; i < 60; i++) {
         for(int j = 0; j < 60; j++) {
-            pointsToRaycast[i][j] = view[0] - (vecHor * (length * i) + vecHor * (length / 2) + vecVert * (length * j) + vecVert * (length / 2));
+            pointsToRaycast[i][j] = view[0] - (vecHor * (length * j) + vecHor * (length / 2) + vecVert * (length * i) + vecVert * (length / 2));
 //            printf("Point %i %i [%f, %f, %f]\n", i, j, pointsToRaycast[i][j].x, pointsToRaycast[i][j].y, pointsToRaycast[i][j].z);
         }
     }
@@ -88,7 +95,7 @@ bool VirtualCamera::CheckIsInCube(Cube cube, Vector3 point) {
 void VirtualCamera::Render() {
     for(int i = 0; i < 60; i++) {
         for(int j = 0 ; j < 60; j++) {
-            printf("%c", Buffer[i][j]);
+            printf("%c ", Buffer[i][j]);
         }
         printf("\n");
     }
@@ -97,7 +104,7 @@ void VirtualCamera::Render() {
 void VirtualCamera::Pitch(float value) {
     Matrix4x4 rotation;
     rotation.LoadIdentity();
-    rotation.SetRotationZ(value);
+    rotation.SetRotationX(value);
     position = rotation * position;
 }
 
@@ -109,10 +116,7 @@ void VirtualCamera::Yaw(float value) {
 }
 
 void VirtualCamera::Roll(float value) {
-    Matrix4x4 rotation;
-    rotation.LoadIdentity();
-    rotation.SetRotationX(value);
-    position = rotation * position;
+    ZDeg += value;
 }
 
 void VirtualCamera::Zoom(float value) {

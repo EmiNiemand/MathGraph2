@@ -14,6 +14,7 @@ class VirtualCamera {
     Vector3 pointsToRaycast[60][60];
     char Buffer[60][60];
     float ViewRatio = 1;
+    float ZDeg = 0;
 public:
     explicit VirtualCamera(const Vector3 &position);
     void CalculateRenderBuffer(Cube cube);

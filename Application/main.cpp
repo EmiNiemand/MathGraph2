@@ -43,17 +43,11 @@ int main() {
         }
         else if(button == 'a') {
             system("cls");
-            camera.Roll(-5);
+            camera.Yaw(-5);
             camera.CalculateRenderBuffer(cube);
             camera.Render();
         }
         else if(button == 'd') {
-            system("cls");
-            camera.Roll(5);
-            camera.CalculateRenderBuffer(cube);
-            camera.Render();
-        }
-        else if(button == 'w') {
             system("cls");
             camera.Yaw(5);
             camera.CalculateRenderBuffer(cube);
@@ -61,19 +55,25 @@ int main() {
         }
         else if(button == 's') {
             system("cls");
-            camera.Yaw(-5);
+            camera.Pitch(-5);
+            camera.CalculateRenderBuffer(cube);
+            camera.Render();
+        }
+        else if(button == 'w') {
+            system("cls");
+            camera.Pitch(5);
             camera.CalculateRenderBuffer(cube);
             camera.Render();
         }
         else if(button == 'z') {
             system("cls");
-            camera.Pitch(-5);
+            camera.Roll(-5);
             camera.CalculateRenderBuffer(cube);
             camera.Render();
         }
         else if(button == 'c') {
             system("cls");
-            camera.Pitch(5);
+            camera.Roll(5);
             camera.CalculateRenderBuffer(cube);
             camera.Render();
         }
