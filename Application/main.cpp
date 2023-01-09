@@ -15,6 +15,8 @@ int main() {
     printf("Enter position of camera:");
     scanf("%f %f %f", &x, &y, &z);
 
+    system("cls");
+
     Cube cube(length);
     VirtualCamera camera({x, y, z});
 
@@ -28,7 +30,6 @@ int main() {
     while(true) {
         char button;
         scanf("%c", &button);
-        printf("Cam pos[%f %f %f]: ", camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
         if(button == 'e') {
             system("cls");
             camera.Zoom(0.5);
@@ -74,6 +75,12 @@ int main() {
         else if(button == 'c') {
             system("cls");
             camera.Roll(5);
+            camera.CalculateRenderBuffer(cube);
+            camera.Render();
+        }
+        else if(button < '9' && button > '0'){
+            system("cls");
+            camera.setViewRatio(button - 48);
             camera.CalculateRenderBuffer(cube);
             camera.Render();
         }

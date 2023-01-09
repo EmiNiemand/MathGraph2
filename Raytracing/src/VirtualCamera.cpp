@@ -13,27 +13,26 @@ VirtualCamera::VirtualCamera(const Vector3 &position) : position(position) {
 void VirtualCamera::CalculateViewPoints() {
     Vector4 lookingDirection(position * -1);
     Vector4 pointDistance(lookingDirection / 2);
-    Vector4 viewDistance(lookingDirection / 2 * ViewRatio);
 
     Vector4 screenHor;
     Vector4 screenVert;
     float margin = 0.0001;
     if(std::abs(lookingDirection.x) >= margin || std::abs(lookingDirection.z) >= margin){
         Vector4 up(0, 1, 0, 1);
-        screenHor = Vector4::cross(viewDistance, up);
+        screenHor = Vector4::cross(pointDistance, up);
 //        printf("Hor [%f, %f, %f]\n", screenHor.x, screenHor.y, screenHor.z);
         Vector4 normalized = screenHor / Vector3(screenHor).length();
 //        printf("[%f, %f, %f]\n", normalized.x, normalized.y, normalized.z);
-        screenVert = Vector4::cross(viewDistance, normalized);
+        screenVert = Vector4::cross(pointDistance, normalized);
 //        printf("Vert [%f, %f, %f]\n", screenVert.x, screenVert.y, screenVert.z);
     }
     else {
         Vector4 up(0, 0, 1, 1);
-        screenHor = Vector4::cross(viewDistance, up);
+        screenHor = Vector4::cross(pointDistance, up);
 //        printf("[%f, %f, %f]\n", screenHor.x, screenHor.y, screenHor.z);
         Vector4 normalized = screenHor / Vector3(screenHor).length();
 //        printf("[%f, %f, %f]\n", normalized.x, normalized.y, normalized.z);
-        screenVert = Vector4::cross(viewDistance, normalized);
+        screenVert = Vector4::cross(pointDistance, normalized);
 //        printf("[%f, %f, %f]\n", screenVert.x, screenVert.y, screenVert.z);
     }
 
@@ -43,17 +42,16 @@ void VirtualCamera::CalculateViewPoints() {
 //    printf("Vert length %f\n", normalizedVert.length());
 //    printf("Hor [%f, %f, %f]\n", normalizedHor.x, normalizedHor.y, normalizedHor.z);
 //    printf("Hor [%f, %f, %f]\n", normalizedVert.x, normalizedVert.y, normalizedVert.z);
-    view[0] = viewDistance * -1 + (normalizedHor + normalizedVert);
-    view[1] = viewDistance * -1 - (normalizedHor + normalizedVert);
+    view[0] = pointDistance * -1 + (normalizedHor + normalizedVert) * ViewRatio;
+    view[1] = pointDistance * -1 - (normalizedHor + normalizedVert) * ViewRatio;
 
-    printf("View0 [%f, %f, %f]\n", view[0].x, view[0].y, view[0].z);
-    printf("View1 [%f, %f, %f]\n", view[1].x, view[1].y, view[1].z);
+//    printf("View0 [%f, %f, %f]\n", view[0].x, view[0].y, view[0].z);
+//    printf("View1 [%f, %f, %f]\n", view[1].x, view[1].y, view[1].z);
     CalculateRaycastPoints(normalizedHor, normalizedVert);
 }
 
 void VirtualCamera::CalculateRaycastPoints(Vector3 vecHor, Vector3 vecVert) {
     float length = Vector3(view[0] - view[1]).length() / std::sqrt(2) / 60;
-    printf("%f\n", length);
 
     for(int i = 0; i < 60; i++) {
         for(int j = 0; j < 60; j++) {
@@ -116,7 +114,10 @@ void VirtualCamera::Yaw(float value) {
 }
 
 void VirtualCamera::Roll(float value) {
-    ZDeg += value;
+    Matrix4x4 rotation;
+    rotation.LoadIdentity();
+    rotation.SetRotationZ(value);
+    position = rotation * position;
 }
 
 void VirtualCamera::Zoom(float value) {
@@ -128,4 +129,8 @@ void VirtualCamera::Zoom(float value) {
 
 const Vector3 &VirtualCamera::getPosition() const {
     return position;
+}
+
+void VirtualCamera::setViewRatio(float viewRatio) {
+    ViewRatio = viewRatio;
 }

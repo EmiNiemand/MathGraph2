@@ -22,6 +22,8 @@ public:
 
     const Vector3 &getPosition() const;
 
+    void setViewRatio(float viewRatio);
+
     void Pitch(float value);
     void Yaw(float value);
     void Roll(float value);
